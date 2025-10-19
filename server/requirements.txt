@@ -1,0 +1,6 @@
+Jinja2==3.0.3
+itsdangerous==2.0.1
+Flask==1.1.1
+werkzeug==2.0.3
+mysql-connector-python
+pyjwt==2.3.0
