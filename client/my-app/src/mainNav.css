@@ -1,34 +1,33 @@
-/* mainNav.css */
-
 nav {
-    background-color: #00754c;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
+
+.hv-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: #faf5ef;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 👈 move items to the left */
+  height: 60px;
+  padding: 0 32px; /* 👈 more space from edges for balance */
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+
+.hv-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #3a2a25;
 }
 
-li {
-    display: inline;
-    margin-right: 20px;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
+.hv-logo { font-size: 20px; line-height: 1; }
+.hv-brand-text { letter-spacing: .4px; }
