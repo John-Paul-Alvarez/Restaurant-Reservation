@@ -29,6 +29,7 @@ function App() {
 
           <Route href="/">
             <Home />
+              <Footer />
           </Route>
 
           <Route href="/logincustomer">
@@ -55,7 +56,7 @@ function App() {
             <Channel />
           </Route>
 
-          <Footer />
+        
         </UserTypeContext.Provider>
       </LoginContext.Provider>
     </NavigationProvider>

@@ -1,0 +1,143 @@
+/* ===== Page Background ===== */
+.staff-register-page {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Center the Modal ===== */
+.staff-register-body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 16px;
+  box-sizing: border-box;
+}
+
+/* ===== Modal Container ===== */
+.staff-register-container {
+  background: rgba(250, 245, 239, 0.97);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  width: 900px; /* ✅ wider container */
+  max-width: 95%;
+  padding: 50px 70px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+/* ===== Title ===== */
+.staff-register-container h2 {
+  color: #3a2a25;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.staff-register-subtext {
+  color: #5a4a45;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+/* ===== Two-Column Layout ===== */
+.staff-register-container form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* ✅ evenly split */
+  gap: 28px 50px;
+  text-align: left;
+  width: 100%;
+  justify-content: space-between;
+  align-items: start;
+}
+
+/* ===== Labels ===== */
+.staff-register-container label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #3a2a25;
+  font-weight: 600;
+  font-family: "Cormorant Garamond", serif;
+  width: 100%;
+}
+
+/* ===== Input / Select Fields ===== */
+.staff-register-container input,
+.staff-register-container select {
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(58, 42, 37, 0.25);
+  background-color: rgba(255, 255, 255, 0.95);
+  font-size: 16px;
+  outline: none;
+  transition: 0.2s ease;
+  width: 100%; /* ✅ ensures full width inside each grid cell */
+  box-sizing: border-box;
+}
+
+.staff-register-container input:focus,
+.staff-register-container select:focus {
+  border-color: #6b2e2e;
+  box-shadow: 0 0 5px rgba(107, 46, 46, 0.4);
+}
+
+/* ===== Button Centered Below ===== */
+.staff-register-btn {
+  grid-column: span 2; /* ✅ spans both columns */
+  background-color: #6b2e2e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 70px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  justify-self: center;
+  transition: all 0.2s ease;
+}
+
+.staff-register-btn:hover {
+  background-color: #8b3a3a;
+}
+
+/* ===== Login Link ===== */
+.staff-login-link {
+  grid-column: span 2;
+  text-align: center;
+  font-size: 15px;
+  color: #3a2a25;
+  margin-top: 20px;
+}
+
+.staff-login-link a {
+  color: #6b2e2e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.staff-login-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive: Stack on Mobile ===== */
+@media (max-width: 768px) {
+  .staff-register-container {
+    width: 95%;
+    padding: 40px 24px;
+  }
+
+  .staff-register-container form {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-register-btn {
+    width: 100%;
+  }
+}

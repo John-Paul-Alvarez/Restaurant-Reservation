@@ -1,11 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NavigationContext from "../NavigationContext";
 import "./home.css";
 import heroImage from "../assets/hero.jpg";
+import ReserveModal from "../Components/ReserveModal";
+import StaffModal from "../Components/StaffModal";
 
 
 const Home = () => {
   const { navigate } = useContext(NavigationContext);
+  const [openReserve, setOpenReserve] = useState(false);
+  const [openStaff, setOpenStaff] = useState(false);
+
+  const openModal = () => setOpenReserve(true);
+  const closeModal = () => setOpenReserve(false);
+  const goLogin = () => { closeModal(); navigate("/logincustomer"); };
+  const goRegister = () => { closeModal(); navigate("/customerregister"); };
+
+  const openStaffModal = () => setOpenStaff(true);
+  const closeStaffModal = () => setOpenStaff(false);
+  const goStaffLogin = () => { closeStaffModal(); navigate("/loginstaff"); };
+  const goStaffRegister = () => { closeStaffModal(); navigate("/staffregister"); };
 
   return (
     <div className="hv-hero" style={{ backgroundImage: `url(${heroImage})` }}>
@@ -19,18 +33,36 @@ const Home = () => {
         </p>
 
 
-        <div className="hv-cta-row">
-        <button className="hv-btn hv-btn-primary" onClick={() => navigate("/logincustomer")}>
+      <button
+        className="hv-btn hv-btn-primary"
+        onClick={openModal}>
         🍽 Reserve Now
-        </button>
+      </button>
 
-        <button className="hv-btn hv-btn-ghost" onClick={() => navigate("/loginstaff")}>
+      <button className="hv-btn hv-btn-ghost" onClick={openStaffModal}>
         👨‍🍳 Staff Login
-        </button>
+      </button>
 
         </div>
+        
+
+        <ReserveModal
+        open={openReserve}
+        onClose={closeModal}
+        onLogin={goLogin}
+        onRegister={goRegister}/>
+
+        
+        <StaffModal
+          open={openStaff}
+          onClose={closeStaffModal}
+          onLogin={goStaffLogin}
+          onRegister={goStaffRegister}
+        />
       </div>
-    </div>
+
+      
+    
   );
 };
 

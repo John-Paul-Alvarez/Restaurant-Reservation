@@ -1,99 +1,120 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import heroImage from "./assets/hero.jpg";
+import "./CustomerRegister.css";
 
 const CustomerRegister = () => {
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-        email: '',
-        additionalInfo: ''
-    });
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    additionalInfo: "",
+  });
 
-    const [error, setError] = useState('');
-    const [registered, setRegistered] = useState(false);
+  const [error, setError] = useState("");
+  const [registered, setRegistered] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('/api/customer/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            if (response.ok) {
-                setRegistered(true);
-            } else {
-                const data = await response.json();
-                setError(data.error || 'Registration failed');
-            }
-        } catch (error) {
-            console.error('Error registering user:', error);
-            setError('Registration failed');
-        }
-    };
-
-    if (registered) {
-        return (
-            <div>
-                <p>Registration successful. Please proceed to login:</p>
-                <button onClick={() => window.location.href = '/customerlogin'}>Login</button>
-            </div>
-        );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/customer/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setRegistered(true);
+      } else {
+        const data = await response.json();
+        setError(data.error || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setError("Registration failed");
     }
+  };
 
+  if (registered) {
     return (
-        <div>
-            <h2>Register</h2>
-            {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Additional Information:
-                    <textarea
-                        name="additionalInfo"
-                        value={formData.additionalInfo}
-                        onChange={handleChange}
-                    />
-                </label>
-                <button type="submit">Register</button>
-            </form>
+      <div className="register-page" style={{ backgroundImage: `url(${heroImage})` }}>
+       <div className="register-body">
+          <div className="register-container">
+            <p>Registration successful! Please log in below:</p>
+            <button onClick={() => (window.location.href = "/logincustomer")}>
+              Login
+            </button>
+          </div>
         </div>
+        
+      </div>
     );
+  }
+
+  return (
+    <div className="register-page" style={{ backgroundImage: `url(${heroImage})` }}>
+
+
+      <div className="register-body">
+        <div className="register-container">
+          <h2>🍷 Create Your Account</h2>
+          <p className="register-subtext">
+            Join our community and reserve your next dining experience effortlessly.
+          </p>
+
+          {error && <p className="error">{error}</p>}
+
+          <form onSubmit={handleSubmit}>
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+
+            {/* <label>Special Requests (Optional)</label>
+            <textarea
+              name="additionalInfo"
+              value={formData.additionalInfo}
+              onChange={handleChange}
+            /> */}
+
+            <button type="submit" className="register-btn">
+              Sign Up
+            </button>
+          </form>
+
+          <p className="login-link">
+            Already have an account? <a href="/logincustomer">Log in here</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  );
 };
 
 export default CustomerRegister;

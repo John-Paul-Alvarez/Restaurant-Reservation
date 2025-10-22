@@ -1,0 +1,115 @@
+/* Backdrop */
+.hv-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+}
+
+/* Panel */
+.hv-modal-panel {
+  width: min(92vw, 440px);
+  border-radius: 16px;
+  background: #FAF5EF; /* soft beige from theme */
+  color: #3A2A25;      /* ink */
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  padding: 22px 22px 20px;
+  animation: hvPop .18s ease-out;
+}
+
+@keyframes hvPop {
+  from { transform: translateY(6px) scale(.98); opacity: .6; }
+  to   { transform: translateY(0)   scale(1);   opacity: 1;  }
+}
+
+/* Header */
+.hv-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hv-modal-header h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: .2px;
+}
+
+.hv-modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #6B2E2E;
+}
+
+/* Body */
+.hv-modal-sub {
+  margin: 8px 0 18px;
+  opacity: .8;
+}
+
+/* Actions */
+.hv-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+/* Button base (reuse your theme buttons) */
+.hv-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  font-size: 15px;
+}
+
+/* Primary = wine red */
+.hv-btn-primary {
+  background: #6B2E2E;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.hv-btn-primary:hover {
+  background: #7c3737;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.45);
+}
+
+/* Ghost = glassy white */
+.hv-btn-ghost {
+  background: rgba(0,0,0,0.04);
+  color: #3A2A25;
+  border: 1.5px solid rgba(0,0,0,0.08);
+}
+.hv-btn-ghost:hover {
+  background: rgba(0,0,0,0.08);
+}
+
+.hv-small-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* GHOST BUTTON - subtle beige contrast */
+.hv-btn-ghost {
+  background: #f7ceaf;             /* soft beige background to contrast with modal */
+  color: #3a2a25;                  /* dark ink text */
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+}
+
+.hv-btn-ghost:hover {
+  background: #e8d9cd;             /* slightly darker beige on hover */
+  color: #6B2E2E;                  /* wine red text hover */
+  border-color: rgba(107, 46, 46, 0.2);
+}
