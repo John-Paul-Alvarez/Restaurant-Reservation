@@ -85,6 +85,7 @@ html, body {
   cursor: pointer;
   transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease;
   font-size: 15px;
+  margin: 20px;
 }
 
 .hv-btn:active { transform: translateY(1px); }
@@ -94,8 +95,9 @@ html, body {
   color: #fff;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   border: none;
-  padding-right: 100px;
 }
+
+
 
 .hv-btn-primary:hover {
   background: #b46060;
@@ -107,6 +109,7 @@ html, body {
   color: #fff;
   border: 1.5px solid rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(3px);
+  padding-left: 10px;
 }
 
 .hv-btn-ghost:hover {

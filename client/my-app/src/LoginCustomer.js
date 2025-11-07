@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { LoginContext, UserTypeContext } from "./App"; // ✅ already correct
 import heroImage from "./assets/hero.jpg";
 import "./CustomerLogin.css";
 
 const LoginCustomer = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [, setLoggedIn] = useContext(LoginContext);
+  const [, setUserType] = useContext(UserTypeContext);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -12,13 +15,32 @@ const LoginCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Example: replace this with your backend login call
-      // const response = await fetch("/api/customer/login", {...})
-      // if (response.ok) ...
+      // ✅ Call backend API
+      const response = await fetch("/api/customer/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      // ✅ Parse JSON and store everything
+      const data = await response.json();
       localStorage.setItem("role", "customer");
-      window.location.pathname = "/booking";
+      localStorage.setItem("username", formData.username);
+      localStorage.setItem("customer_id", data.customer_id); // ✅ save it
+
+      // ✅ Update context
+      setLoggedIn(true);
+      setUserType("customer");
+
+      // ✅ Redirect to booking
+      window.location.href = "/booking";
     } catch (err) {
       setError("Login failed. Please try again.");
+      console.error(err);
     }
   };
 

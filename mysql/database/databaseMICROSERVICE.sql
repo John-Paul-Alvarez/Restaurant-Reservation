@@ -3,67 +3,137 @@ CREATE DATABASE IF NOT EXISTS db;
 USE db;
 
 CREATE TABLE customer (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(255) UNIQUE, additional_customer_information VARCHAR(255)
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    additional_customer_information VARCHAR(255)
 );
 
 INSERT INTO
     customer (
-        username, password, email, additional_customer_information
+        username,
+        password,
+        email,
+        additional_customer_information
     )
 VALUES (
-        'aa', 'aa', 'customer1@example.com', 'Regular customer'
+        'aa',
+        'aa',
+        'customer1@example.com',
+        'Regular customer'
     ),
     (
-        'customer2', 'hashed_password2', 'customer2@example.com', 'VIP customer'
+        'customer2',
+        'hashed_password2',
+        'customer2@example.com',
+        'VIP customer'
     ),
     (
-        'customer3', 'hashed_password3', 'customer3@example.com', 'VIP customer'
+        'customer3',
+        'hashed_password3',
+        'customer3@example.com',
+        'VIP customer'
     );
 
 CREATE TABLE staff (
-    staff_id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(255) UNIQUE, role VARCHAR(50), additional_staff_information VARCHAR(255)
+    staff_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    role VARCHAR(50),
+    additional_staff_information VARCHAR(255)
 );
 
 INSERT INTO
     staff (
-        username, password, email, role, additional_staff_information
+        username,
+        password,
+        email,
+        role,
+        additional_staff_information
     )
 VALUES (
-        'manager1', 'hashed_password1', 'manager1@example.com', 'manager', 'Senior Manager'
+        'manager1',
+        'hashed_password1',
+        'manager1@example.com',
+        'manager',
+        'Senior Manager'
     ),
     (
-        'receptionist1', 'hashed_password2', 'receptionist1@example.com', 'receptionist', 'Front Desk'
+        'receptionist1',
+        'hashed_password2',
+        'receptionist1@example.com',
+        'receptionist',
+        'Front Desk'
     );
 
 CREATE TABLE reservation (
-    reservation_id INT AUTO_INCREMENT PRIMARY KEY, customer_id INT, reservation_date_time DATETIME, party_size INT, reservation_status VARCHAR(50), username VARCHAR(255), FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
+    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    reservation_date_time DATETIME,
+    party_size INT,
+    reservation_status VARCHAR(50),
+    username VARCHAR(255),
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id)
 );
 
 INSERT INTO
     reservation (
-        customer_id, reservation_date_time, party_size, reservation_status, username
+        customer_id,
+        reservation_date_time,
+        party_size,
+        reservation_status,
+        username
     )
 VALUES (
-        1, '2024-04-01 18:55:55', 4, 'pending', 'customer1'
+        1,
+        '2024-04-01 18:55:55',
+        4,
+        'pending',
+        'customer1'
     ),
     (
-        2, '2024-04-02 19:55:55', 2, 'pending', 'customer2'
+        2,
+        '2024-04-02 19:55:55',
+        2,
+        'pending',
+        'customer2'
     ),
     (
-        3, '2024-04-02 20:55:55', 3, 'pending', 'customer3'
+        3,
+        '2024-04-02 20:55:55',
+        3,
+        'pending',
+        'customer3'
     );
 
 CREATE TABLE notification (
-    notification_id INT AUTO_INCREMENT PRIMARY KEY, recipient_id INT, notification_type VARCHAR(50), message_content VARCHAR(255), timestamp TIMESTAMP, FOREIGN KEY (recipient_id) REFERENCES customer (customer_id) ON DELETE CASCADE, FOREIGN KEY (recipient_id) REFERENCES staff (staff_id) ON DELETE CASCADE
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    recipient_id INT,
+    notification_type VARCHAR(50),
+    message_content VARCHAR(255),
+    timestamp TIMESTAMP,
+    FOREIGN KEY (recipient_id) REFERENCES customer (customer_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipient_id) REFERENCES staff (staff_id) ON DELETE CASCADE
 );
 
 INSERT INTO
     notification (
-        recipient_id, notification_type, message_content, timestamp
+        recipient_id,
+        notification_type,
+        message_content,
+        timestamp
     )
 VALUES (
-        1, 'reservation_confirmation', 'Your reservation for April 1st at 6:00 PM has been confirmed.', CURRENT_TIMESTAMP
+        1,
+        'reservation_confirmation',
+        'Your reservation for April 1st at 6:00 PM has been confirmed.',
+        CURRENT_TIMESTAMP
     ),
     (
-        2, 'reservation_confirmation', 'Your reservation for April 2nd at 7:00 PM has been confirmed.', CURRENT_TIMESTAMP
+        2,
+        'reservation_confirmation',
+        'Your reservation for April 2nd at 7:00 PM has been confirmed.',
+        CURRENT_TIMESTAMP
     );

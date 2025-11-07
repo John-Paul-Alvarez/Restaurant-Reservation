@@ -48,7 +48,7 @@ const StaffRegister = () => {
         <div className="staff-register-body">
           <div className="staff-register-container">
             <p>Registration successful! Please log in below:</p>
-            <button onClick={() => (window.location.href = "/stafflogin")}>
+            <button onClick={() => (window.location.href = "/loginstaff")}>
               Login
             </button>
           </div>
@@ -83,7 +83,7 @@ const StaffRegister = () => {
       required
     />
 
-    <label>Password</label>
+    <label className="Password">Password</label>
     <input
       type="password"
       name="password"
@@ -103,7 +103,7 @@ const StaffRegister = () => {
       required
     />
 
-    <label>Role</label>
+    <label className="Role">Role</label>
     <select
       name="role"
       value={formData.role}
@@ -125,7 +125,7 @@ const StaffRegister = () => {
 
 
           <p className="staff-login-link">
-            Already part of the team? <a href="/stafflogin">Log in here</a>
+            Already part of the team? <a href="/loginstaff">Log in here</a>
           </p>
         </div>
       </div>

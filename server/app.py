@@ -21,6 +21,7 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
             cursor = conn.cursor(dictionary=True)
             cursor.execute("SELECT * FROM customer")
             customers = cursor.fetchall()
+            print("Customers fetched:", customers)
             cursor.close()
             conn.close()
 
@@ -161,12 +162,21 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write(json.dumps({'error': 'Username already exists'}).encode())
                 else:
                     hashed_password = generate_password_hash(password)
-                    cursor.execute("INSERT INTO customer (username, password, email, additional_customer_information) VALUES (%s, %s, %s, %s)", (username, hashed_password, email, additional_info))
+                    cursor.execute(
+                        "INSERT INTO customer (username, password, email, additional_customer_information) "
+                        "VALUES (%s, %s, %s, %s)",
+                        (username, hashed_password, email, additional_info)
+                    )
                     conn.commit()
+                    new_customer_id = cursor.lastrowid  # ✅ Get the new id
+
                     self.send_response(201)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
-                    self.wfile.write(json.dumps({'message': 'Registration successful'}).encode())
+                    self.wfile.write(json.dumps({
+                        'message': 'Registration successful',
+                        'customer_id': new_customer_id  # ✅ Return ID
+                    }).encode())
             except Exception as e:
                 conn.rollback()
                 self.send_response(500)
@@ -230,13 +240,24 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
                 cursor.close()
                 conn.close()
 
-                if user and check_password_hash(user['password'], password):
-                    # Encode username and role into the JWT token
+                ok = False
+                if user:
+                    stored_pw = user['password']  # may be hashed or plain (from seed)
+                    # If it looks like a Werkzeug hash, verify properly; otherwise compare plain
+                    if isinstance(stored_pw, str) and stored_pw.startswith('pbkdf2:'):
+                        ok = check_password_hash(stored_pw, password)
+                    else:
+                        ok = (stored_pw == password)
+
+                if ok:
                     token = jwt.encode({'username': username, 'role': 'customer'}, 'secret_key', algorithm='HS256')
                     self.send_response(200)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
-                    self.wfile.write(json.dumps({'token': token}).encode())
+                    self.wfile.write(json.dumps({
+                        'token': token,
+                        'customer_id': user['customer_id']  # ✅ send id back
+                    }).encode())
                 else:
                     self.send_response(401)
                     self.send_header('Content-type', 'application/json')

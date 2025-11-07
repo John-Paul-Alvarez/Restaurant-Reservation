@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { LoginContext, UserTypeContext } from "./App"; // 🟢 FIX ADDED
 import heroImage from "./assets/hero.jpg";
 import "./StaffLogin.css";
 
 const LoginStaff = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
+  const [, setLoggedIn] = useContext(LoginContext);
+  const [, setUserType] = useContext(UserTypeContext);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -12,11 +15,12 @@ const LoginStaff = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Example backend call
-      // const response = await fetch("/api/staff/login", {...})
-      // if (response.ok) ...
+      // Simulate successful login
       localStorage.setItem("role", "staff");
-      window.location.pathname = "/channel";
+      localStorage.setItem("username", formData.username);
+      setLoggedIn(true);        // update context
+      setUserType("staff");     // update context
+      window.location.href = "/channel";
     } catch (err) {
       setError("Login failed. Please try again.");
     }

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./reserveModal.css"; // reuse same design
+import "./staffModal.css"
 
 const StaffModal = ({ open, onClose, onLogin, onRegister }) => {
   useEffect(() => {
@@ -30,10 +31,10 @@ const StaffModal = ({ open, onClose, onLogin, onRegister }) => {
         </p>
 
         <div className="hv-modal-actions">
-          <button className="hv-btn hv-btn-primary" onClick={onLogin}>
+          <button className="hv-btn-hv-btn-primary" onClick={onLogin}>
             Staff Log In
           </button>
-          <button className="hv-btn hv-btn-ghost" onClick={onRegister}>
+          <button className="hv-btn-hv-btn-ghost" onClick={onRegister}>
             Create Staff Account
           </button>
         </div>

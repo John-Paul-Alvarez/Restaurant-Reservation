@@ -11,7 +11,6 @@ const CustomerRegister = () => {
   });
 
   const [error, setError] = useState("");
-  const [registered, setRegistered] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,8 +25,14 @@ const CustomerRegister = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       if (response.ok) {
-        setRegistered(true);
+        // ✅ Parse the response and save login info
+        const data = await response.json();
+        localStorage.setItem("role", "customer");
+        localStorage.setItem("username", formData.username);
+        localStorage.setItem("customer_id", data.customer_id); // ✅ save it
+        window.location.href = "/booking"; // ✅ redirect to booking
       } else {
         const data = await response.json();
         setError(data.error || "Registration failed");
@@ -38,31 +43,17 @@ const CustomerRegister = () => {
     }
   };
 
-  if (registered) {
-    return (
-      <div className="register-page" style={{ backgroundImage: `url(${heroImage})` }}>
-       <div className="register-body">
-          <div className="register-container">
-            <p>Registration successful! Please log in below:</p>
-            <button onClick={() => (window.location.href = "/logincustomer")}>
-              Login
-            </button>
-          </div>
-        </div>
-        
-      </div>
-    );
-  }
-
   return (
-    <div className="register-page" style={{ backgroundImage: `url(${heroImage})` }}>
-
-
+    <div
+      className="register-page"
+      style={{ backgroundImage: `url(${heroImage})` }}
+    >
       <div className="register-body">
         <div className="register-container">
           <h2>🍷 Create Your Account</h2>
           <p className="register-subtext">
-            Join our community and reserve your next dining experience effortlessly.
+            Join our community and reserve your next dining experience
+            effortlessly.
           </p>
 
           {error && <p className="error">{error}</p>}
@@ -108,11 +99,11 @@ const CustomerRegister = () => {
           </form>
 
           <p className="login-link">
-            Already have an account? <a href="/logincustomer">Log in here</a>
+            Already have an account?{" "}
+            <a href="/logincustomer">Log in here</a>
           </p>
         </div>
       </div>
-
     </div>
   );
 };

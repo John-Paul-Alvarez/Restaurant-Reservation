@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import "./App.css";
 import MainNav from "./Mainav";
 import NavigationProvider from "./NavigationProvider";
@@ -13,13 +13,26 @@ import Booking from "./pages/Booking";
 import Channel from "./pages/Channel";
 import Footer from "./Components/Footer";
 
-//  Context exports
+// Context exports
 export const LoginContext = createContext();
 export const UserTypeContext = createContext();
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
+  const [loading, setLoading] = useState(true); // 🟢 Add loading state
+
+  // 🟢 Load saved login info once before rendering protected routes
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role === "customer" || role === "staff") {
+      setLoggedIn(true);
+      setUserType(role);
+    }
+    setLoading(false);
+  }, []);
+
+  if (loading) return null; // 🟢 Don’t render routes until context is ready
 
   return (
     <NavigationProvider>
@@ -29,7 +42,7 @@ function App() {
 
           <Route href="/">
             <Home />
-              <Footer />
+            <Footer />
           </Route>
 
           <Route href="/logincustomer">
@@ -55,8 +68,6 @@ function App() {
           <Route href="/channel">
             <Channel />
           </Route>
-
-        
         </UserTypeContext.Provider>
       </LoginContext.Provider>
     </NavigationProvider>

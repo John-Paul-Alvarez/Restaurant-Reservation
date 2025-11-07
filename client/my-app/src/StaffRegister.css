@@ -78,7 +78,7 @@
   font-size: 16px;
   outline: none;
   transition: 0.2s ease;
-  width: 100%; /* ✅ ensures full width inside each grid cell */
+  width: 100%; /* ensures full width inside each grid cell */
   box-sizing: border-box;
 }
 
@@ -140,4 +140,12 @@
   .staff-register-btn {
     width: 100%;
   }
+}
+
+.Password{
+  margin-top: 40px;
+}
+
+.Role{
+  margin-top: 40px;
 }

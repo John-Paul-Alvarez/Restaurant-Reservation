@@ -1,0 +1,46 @@
+.hv-btn-hv-btn-primary{
+  background: #a24242; /* deep wine red */
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 160ms ease;
+  font-size: 15px;
+  height: 45px;
+}
+
+
+.hv-btn-hv-btn-primary:hover {
+  background: #b46060;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+
+.hv-btn-hv-btn-ghost {
+  background: #f7ceaf;             /* soft beige background to contrast with modal */
+  color: #3a2a25;                  /* dark ink text */
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+  border-radius: 999px;
+    font-size: 15px;
+  height: 45px;
+    font-weight: 600;
+    width: 200px;
+    margin-left: 20px;
+  
+}
+
+.hv-btn-hv-btn-ghost:hover {
+    background: #e8d9cd;             /* slightly darker beige on hover */
+  color: #6B2E2E;                  /* wine red text hover */
+  border-color: rgba(107, 46, 46, 0.2);
+}
+
+
+.hv-small-hint{
+    margin-top: 30px;
+}
