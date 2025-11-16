@@ -4,6 +4,9 @@ FROM node:latest
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
+#  Add this line HERE
+ENV NODE_OPTIONS="--localstorage-file=/tmp/localstorage.json"
+
 # Copy package.json and yarn.lock to the working directory
 COPY package.json .
 COPY yarn.lock .

@@ -1,26 +1,23 @@
-nav {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-
 .hv-nav {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
   width: 100%;
   background: #faf5ef;
   border-bottom: 1px solid rgba(0,0,0,0.06);
+
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* 👈 move items to the left */
+  justify-content: space-between; /* 👈 KEY FIX */
+  
   height: 60px;
-  padding: 0 32px; /* 👈 more space from edges for balance */
+  padding: 0 32px;
+  box-sizing: border-box;
 }
 
-
+/* Brand on the left */
 .hv-brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 10px;
   font-family: "Cormorant Garamond", serif;
@@ -29,5 +26,45 @@ nav {
   color: #3a2a25;
 }
 
-.hv-logo { font-size: 20px; line-height: 1; }
-.hv-brand-text { letter-spacing: .4px; }
+.hv-logo {
+  font-size: 20px;
+}
+
+/* Profile on right */
+.hv-profile {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-icon {
+  font-size: 24px;
+  user-select: none;
+}
+
+/* Dropdown */
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  padding: 10px;
+  min-width: 120px;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  border: none;
+  background: none;
+  padding: 8px 0;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.profile-dropdown button:hover {
+  color: #b00000;
+  font-weight: 600;
+}

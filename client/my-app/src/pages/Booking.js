@@ -1,61 +1,79 @@
 import React, { useState, useEffect, useContext } from "react";
 import { LoginContext, UserTypeContext } from "../App";
+import bgImg from "../assets/restaurant-bg.jpg";
+import "./booking.css";
 
 const Booking = () => {
   const [loggedIn] = useContext(LoginContext);
   const [userType] = useContext(UserTypeContext);
   const [loading, setLoading] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
+
 
   const [formData, setFormData] = useState({
     customer_id: "",
     reservation_date_time: "",
-    party_size: "",
+    party_size: "2",
     reservation_status: "pending",
     username: "",
   });
 
-  // ✅ Step 1: Ensure only customers access this page
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Derived validation state
+  const isFormValid =
+    formData.reservation_date_time.trim() !== "" &&
+    parseInt(formData.party_size, 10) > 0;
+
+  // stepper logic
+  const handlePartyChange = (delta) => {
+    setFormData((prev) => {
+      const current = parseInt(prev.party_size || "1", 10);
+      const next = Math.max(1, current + delta);
+      return { ...prev, party_size: String(next) };
+    });
+  };
+
+  // Only allow logged-in customers
   useEffect(() => {
     if (!loggedIn || userType !== "customer") {
       window.location.href = "/logincustomer";
     }
   }, [loggedIn, userType]);
 
-  // ✅ Step 2: Get customer_id + username from localStorage
+  // Load username + customer_id
   useEffect(() => {
-    const username = localStorage.getItem("username");
+    const username = localStorage.getItem("username") || "";
     let customer_id = localStorage.getItem("customer_id");
 
-    // If missing (e.g., seed users), create one temporarily
     if (!customer_id) {
-      const randomId = Math.floor(Math.random() * 1000000);
-      localStorage.setItem("customer_id", randomId);
-      customer_id = randomId;
-      console.log("🆕 Generated random customer ID:", randomId);
-    } else {
-      console.log("✅ Using saved customer ID:", customer_id);
+      const randomId = Math.floor(Math.random() * 1_000_000);
+      customer_id = String(randomId);
+      localStorage.setItem("customer_id", customer_id);
     }
 
-    // Update formData
     setFormData((prev) => ({
       ...prev,
-      username: username || "GuestUser",
-      customer_id: customer_id.toString(),
+      username,
+      customer_id,
+      party_size: prev.party_size || "2",
     }));
-
     setLoading(false);
   }, []);
 
-  // ✅ Handle input changes for date/time and party size
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // ✅ Submit reservation
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("🟢 Submitting reservation:", formData);
+    if (!isFormValid) return;
+
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/create-reservation", {
@@ -65,65 +83,126 @@ const Booking = () => {
       });
 
       if (response.ok) {
-        alert("🎉 Reservation created successfully!");
-        setFormData({
-          ...formData,
+        setShowSuccess(true);
+
+        // Reset inputs
+        setFormData((prev) => ({
+          ...prev,
           reservation_date_time: "",
-          party_size: "",
-        });
+          party_size: "2",
+        }));
       } else {
-        const errData = await response.json();
-        alert("⚠️ Error: " + (errData.error || "Failed to create reservation"));
+        console.error("Reservation failed");
       }
-    } catch (error) {
-      console.error("❌ Error creating reservation:", error);
-      alert("Something went wrong while submitting reservation.");
+
+    } catch (err) {
+      console.error("Error submitting reservation", err);
+      alert("Network error while submitting reservation.");
     }
+
+    setIsSubmitting(false);
   };
 
   if (loading) {
-    return <p>Loading your booking profile...</p>;
+    return <p className="booking-loading">Loading your booking profile...</p>;
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Make a Reservation</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Hidden fields (system-provided) */}
-        <input type="hidden" name="customer_id" value={formData.customer_id} />
-        <input type="hidden" name="username" value={formData.username} />
+    <div
+      className="booking-page"
+      style={{ backgroundImage: `url(${bgImg})` }}
+    >
 
-        <label>
-          Reservation Date and Time:
-          <input
-            type="datetime-local"
-            name="reservation_date_time"
-            value={formData.reservation_date_time}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
+      <div className="booking-card">
+        <h2 className="booking-title">Make a Reservation</h2>
 
-        <label>
-          Party Size:
-          <input
-            type="number"
-            name="party_size"
-            value={formData.party_size}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
+        <form className="booking-form" onSubmit={handleSubmit}>
+          <input type="hidden" name="customer_id" value={formData.customer_id} />
+          <input type="hidden" name="username" value={formData.username} />
 
-        <button type="submit">Submit Reservation</button>
-      </form>
+          {/* Date & Time */}
+          <div className="booking-row">
+            <label className="booking-label" htmlFor="reservation_date_time">
+              Reservation Date &amp; Time
+            </label>
+            <input
+              id="reservation_date_time"
+              type="datetime-local"
+              name="reservation_date_time"
+              value={formData.reservation_date_time}
+              onChange={handleChange}
+              className="booking-input"
+              required
+            />
+          </div>
 
-      <p style={{ marginTop: "10px", fontSize: "14px" }}>
-        <strong>Current User:</strong> {formData.username} <br />
-        <strong>Customer ID:</strong> {formData.customer_id}
-      </p>
+          {/* Party Size */}
+          <div className="booking-row booking-row-party">
+            <div className="booking-party-label">
+              <span className="booking-party-icon">👥</span>
+              <span className="booking-label">Party Size</span>
+            </div>
+
+            <div className="booking-party-stepper">
+              <button
+                type="button"
+                className="booking-stepper-btn"
+                onClick={() => handlePartyChange(-1)}
+              >
+                −
+              </button>
+              <span className="booking-party-value">
+                {formData.party_size || "1"}
+              </span>
+              <button
+                type="button"
+                className="booking-stepper-btn"
+                onClick={() => handlePartyChange(1)}
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className={`booking-submit ${!isFormValid || isSubmitting ? "booking-submit-disabled" : ""}`}
+            disabled={!isFormValid || isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Reservation"}
+          </button>
+        </form>
+
+        <div className="booking-meta">
+          <div className="booking-meta-labels">
+            <span className="booking-meta-label">Current User</span>
+            <span className="booking-meta-label">Customer ID</span>
+          </div>
+          <div className="booking-meta-values">
+            <span className="booking-meta-value">
+              {formData.username || "—"}
+            </span>
+            <span className="booking-meta-value">
+              {formData.customer_id || "—"}
+            </span>
+          </div>
+        </div>
+
+          
+          {showSuccess && (
+            <div className="modal-overlay">
+              <div className="modal-card">
+                <div className="modal-icon">🎉</div>
+                <h3 className="modal-title">Reservation Confirmed</h3>
+                <p className="modal-text">Your table has been successfully reserved!</p>
+
+                <button className="modal-btn" onClick={() => setShowSuccess(false)}>
+                  OK
+                </button>
+              </div>
+            </div>
+          )}
+      </div>
     </div>
   );
 };

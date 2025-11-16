@@ -20,9 +20,9 @@ export const UserTypeContext = createContext();
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
-  const [loading, setLoading] = useState(true); // 🟢 Add loading state
+  const [loading, setLoading] = useState(true); //  Add loading state
 
-  // 🟢 Load saved login info once before rendering protected routes
+  // Load saved login info once before rendering protected routes
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role === "customer" || role === "staff") {
