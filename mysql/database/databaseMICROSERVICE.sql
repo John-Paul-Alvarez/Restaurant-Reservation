@@ -18,19 +18,19 @@ INSERT INTO
         additional_customer_information
     )
 VALUES (
-        'aa',
+        'Anneta Konstantinides ',
         'aa',
         'customer1@example.com',
         'Regular customer'
     ),
     (
-        'customer2',
+        'Ariel Klein',
         'hashed_password2',
         'customer2@example.com',
         'VIP customer'
     ),
     (
-        'customer3',
+        'Alex Mierjeski',
         'hashed_password3',
         'customer3@example.com',
         'VIP customer'
@@ -91,21 +91,21 @@ VALUES (
         '2024-04-01 18:55:55',
         4,
         'pending',
-        'customer1'
+        'Anneta Konstantinides'
     ),
     (
         2,
         '2024-04-02 19:55:55',
         2,
         'pending',
-        'customer2'
+        'Ariel Klein'
     ),
     (
         3,
         '2024-04-02 20:55:55',
         3,
         'pending',
-        'customer3'
+        'Alex Mierjeski'
     );
 
 CREATE TABLE notification (
