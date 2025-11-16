@@ -203,7 +203,7 @@ const Channel = () => {
           </div>
         </div>
 
-        {/* Table / empty state */}
+        {/* Table / empty state --*/}
         {!filteredReservations || filteredReservations.length === 0 ? (
           <div className="res-empty">
             <p>No reservations found for this view.</p>
