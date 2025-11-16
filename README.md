@@ -10,7 +10,7 @@ To run the application locally, follow these steps:
 Clone the repository using the following command:
 
 
-git clone https://github.com/AcePyurio/proj.git](https://github.com/John-Paul-Alvarez/Restaurant-Reservation.git
+git clone https://github.com/John-Paul-Alvarez/Restaurant-Reservation.git
 
 
 ## Navigate to the Directory
