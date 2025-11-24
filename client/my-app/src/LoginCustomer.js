@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { LoginContext, UserTypeContext } from "./App"; // ✅ already correct
+import { LoginContext, UserTypeContext } from "./App"; 
 import heroImage from "./assets/hero.jpg";
 import "./CustomerLogin.css";
 
@@ -15,7 +15,7 @@ const LoginCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // ✅ Call backend API
+      //  Call backend API
       const response = await fetch("/api/customer/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,17 +26,17 @@ const LoginCustomer = () => {
         throw new Error("Invalid credentials");
       }
 
-      // ✅ Parse JSON and store everything
+      //  Parse JSON and store everything
       const data = await response.json();
       localStorage.setItem("role", "customer");
       localStorage.setItem("username", formData.username);
-      localStorage.setItem("customer_id", data.customer_id); // ✅ save it
+      localStorage.setItem("customer_id", data.customer_id); //  save it
 
-      // ✅ Update context
+      //  Update context
       setLoggedIn(true);
       setUserType("customer");
 
-      // ✅ Redirect to booking
+      //  Redirect to booking
       window.location.href = "/booking";
     } catch (err) {
       setError("Login failed. Please try again.");

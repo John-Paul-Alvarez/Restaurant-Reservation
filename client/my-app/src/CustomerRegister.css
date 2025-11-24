@@ -13,7 +13,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center; /* ✅ Centers vertically */
+  align-items: center; 
   padding: 40px 16px;
   box-sizing: border-box;
 }

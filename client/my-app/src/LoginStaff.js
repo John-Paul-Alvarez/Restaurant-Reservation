@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { LoginContext, UserTypeContext } from "./App"; // 🟢 FIX ADDED
+import { LoginContext, UserTypeContext } from "./App"; 
 import heroImage from "./assets/hero.jpg";
 import "./StaffLogin.css";
 
@@ -18,8 +18,8 @@ const LoginStaff = () => {
       // Simulate successful login
       localStorage.setItem("role", "staff");
       localStorage.setItem("username", formData.username);
-      setLoggedIn(true);        // update context
-      setUserType("staff");     // update context
+      setLoggedIn(true);        
+      setUserType("staff");     
       window.location.href = "/channel";
     } catch (err) {
       setError("Login failed. Please try again.");

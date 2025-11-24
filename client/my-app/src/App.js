@@ -20,7 +20,7 @@ export const UserTypeContext = createContext();
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
-  const [loading, setLoading] = useState(true); //  Add loading state
+  const [loading, setLoading] = useState(true); 
 
   // Load saved login info once before rendering protected routes
   useEffect(() => {
@@ -32,7 +32,7 @@ function App() {
     setLoading(false);
   }, []);
 
-  if (loading) return null; // 🟢 Don’t render routes until context is ready
+  if (loading) return null; //  Don’t render routes until context is ready
 
   return (
     <NavigationProvider>

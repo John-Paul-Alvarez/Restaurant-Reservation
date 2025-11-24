@@ -27,12 +27,12 @@ const CustomerRegister = () => {
       });
 
       if (response.ok) {
-        // ✅ Parse the response and save login info
+        //  Parse the response and save login info
         const data = await response.json();
         localStorage.setItem("role", "customer");
         localStorage.setItem("username", formData.username);
-        localStorage.setItem("customer_id", data.customer_id); // ✅ save it
-        window.location.href = "/booking"; // ✅ redirect to booking
+        localStorage.setItem("customer_id", data.customer_id); //  save it
+        window.location.href = "/booking"; //  redirect to booking
       } else {
         const data = await response.json();
         setError(data.error || "Registration failed");

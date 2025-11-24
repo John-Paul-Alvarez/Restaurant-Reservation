@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./reserveModal.css"; // reuse same design
+import "./reserveModal.css"; 
 import "./staffModal.css"
 
 const StaffModal = ({ open, onClose, onLogin, onRegister }) => {
